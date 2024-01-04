@@ -3,9 +3,16 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Box, Button, CardActionArea, CardActions } from '@mui/material';
 
-export default function PokemonCard({name, image}) {
+export default function PokemonCard({name, image, types}) {
+  const typeHandler = () => {
+    if(types[1]){
+      return types[0].type.name + " | " + types[1].type .name;
+    }
+    return types[0].type.name;
+  };
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -19,8 +26,8 @@ export default function PokemonCard({name, image}) {
           <Typography gutterBottom variant="h5" component="div">
             {name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-          Hiding in people's shadows at night, it absorbs their heat. The chill it causes makes the victims shake.
+          <Typography gutterBottom variant="caption" color="text.secondary" component="div">
+          {typeHandler()}
           </Typography>
         </CardContent>
       </CardActionArea>

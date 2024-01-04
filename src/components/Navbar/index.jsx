@@ -51,27 +51,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function Navbar() {
+export default function Navbar({ pokemonFilter }) {
     return (
-        <Box sx={{ flexGrow: 1, marginBottom: 3 }}>
+        <Box sx={{ flexGrow: 1, marginBottom: "2em" }}>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-                        PokeLarces
-                    </Typography>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Pesquisar…"
-                            inputProps={{ 'aria-label': 'pesquisar' }}
-                        />
-                    </Search>
+                    <Box display="flex" justifyContent="space-between" width="100%">
+                        <Box component="img" src="/assets/larces.png" height="3em" sx={{ cursor: "pointer" }} onClick={() => navigate("/")} />
+                        <Search onChange={(e) => pokemonFilter(e.target.value.toLowerCase())}>
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase placeholder="Pesquisar..." inputProps={{ "aria-label": "pesquisar" }} />
+                        </Search>
+                    </Box>
                 </Toolbar>
             </AppBar>
         </Box>
