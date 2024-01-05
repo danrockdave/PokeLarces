@@ -1,14 +1,17 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import PokemonCard from '../components/PokemonCard'
-import { Container, Grid, Skeleton } from '@mui/material'
+import { Box, Container, Grid, Skeleton } from '@mui/material'
 import axios from "axios";
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Skeletons } from '../components/Skeletons';
+import { useNavigate } from 'react-router-dom';
 
-export const Home = () => {
+export const Home = ({setPokemonData}) => {
     const [pokemons, setPokemons] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         getPokemons();
@@ -40,6 +43,11 @@ export const Home = () => {
         setPokemons(filteredPokemons);
     }
 
+    const pokemonPickHandler = (pokemonData) => {
+        setPokemonData(pokemonData)
+        navigate("/profile")
+    }
+
     return (
         <div>
             <Navbar pokemonFilter={pokemonFilter} />
@@ -50,11 +58,13 @@ export const Home = () => {
                     ) : (
                         pokemons.map((pokemon, key) => (
                             <Grid item xs={12} md={2} key={key}>
-                                <PokemonCard
-                                    name={pokemon.data.name}
-                                    image={pokemon.data.sprites.front_default}
-                                    types={pokemon.data.types}
-                                />
+                                <Box onClick={()=>pokemonPickHandler(pokemon.data)}>
+                                    <PokemonCard
+                                        name={pokemon.data.name}
+                                        image={pokemon.data.sprites.front_default}
+                                        types={pokemon.data.types}
+                                    />
+                                </Box>
                             </Grid>
                         ))
                     )}

@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -51,19 +52,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function Navbar({ pokemonFilter }) {
+export default function Navbar({ pokemonFilter, hideSearch }) {
+    const navigate = useNavigate();
     return (
         <Box sx={{ flexGrow: 1, marginBottom: "2em" }}>
             <AppBar position="static">
                 <Toolbar>
                     <Box display="flex" justifyContent="space-between" width="100%">
                         <Box component="img" src="/assets/larces.png" height="3em" sx={{ cursor: "pointer" }} onClick={() => navigate("/")} />
-                        <Search onChange={(e) => pokemonFilter(e.target.value.toLowerCase())}>
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase placeholder="Pesquisar..." inputProps={{ "aria-label": "pesquisar" }} />
-                        </Search>
+                        {hideSearch ? null :
+                            <Search onChange={(e) => pokemonFilter(e.target.value.toLowerCase())}>
+                                <SearchIconWrapper>
+                                    <SearchIcon />
+                                </SearchIconWrapper>
+                                <StyledInputBase placeholder="Pesquisar..." inputProps={{ "aria-label": "pesquisar" }} />
+                            </Search>
+                        }
                     </Box>
                 </Toolbar>
             </AppBar>
